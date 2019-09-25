@@ -34,8 +34,14 @@ public struct CoreDataAttributeDescription {
         attribute.attributeType = attributeType
         attribute.isOptional = isOptional
         attribute.isIndexedBySpotlight = isIndexedBySpotlight
-        attribute.defaultValue = defaultValue
-        attribute.attributeValueClassName = className
+        
+        if let defaultValue = defaultValue {
+            attribute.defaultValue = defaultValue
+        }
+        
+        if let className = className {
+            attribute.attributeValueClassName = className
+        }
         
         return attribute
     }
