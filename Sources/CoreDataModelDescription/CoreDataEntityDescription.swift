@@ -12,8 +12,8 @@ import CoreData
 /// Describes and creates `NSEntityDescription`
 public struct CoreDataEntityDescription {
 
-    public static func entity(name: String, managedObjectClass: NSManagedObject.Type = NSManagedObject.self, parentEntity: String? = nil, attributes: [CoreDataAttributeDescription] = [], fetchedProperties: [CoreDataFetchedPropertyDescription] = [], relationships: [CoreDataRelationshipDescription] = [], configuration: String = "Default") -> CoreDataEntityDescription {
-        return CoreDataEntityDescription(name: name, managedObjectClassName: NSStringFromClass(managedObjectClass), parentEntity: parentEntity, attributes: attributes, fetchedProperties: fetchedProperties, relationships: relationships, configuration: configuration)
+    public static func entity(name: String, managedObjectClass: NSManagedObject.Type = NSManagedObject.self, parentEntity: String? = nil, attributes: [CoreDataAttributeDescription] = [], fetchedProperties: [CoreDataFetchedPropertyDescription] = [], relationships: [CoreDataRelationshipDescription] = [], configuration: String = "Default", uniqueConstraints: [[String]] = []) -> CoreDataEntityDescription {
+        return CoreDataEntityDescription(name: name, managedObjectClassName: NSStringFromClass(managedObjectClass), parentEntity: parentEntity, attributes: attributes, fetchedProperties: fetchedProperties, relationships: relationships, configuration: configuration, uniqueConstraints: uniqueConstraints)
     }
 
     public var name: String
@@ -29,4 +29,6 @@ public struct CoreDataEntityDescription {
     public var relationships: [CoreDataRelationshipDescription]
     
     public var configuration: String
+    
+    public var uniqueConstraints: [[String]]
 }

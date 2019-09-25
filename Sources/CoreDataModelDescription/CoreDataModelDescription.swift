@@ -34,7 +34,7 @@ public struct CoreDataModelDescription {
             entity.name = entityDescription.name
             entity.managedObjectClassName = entityDescription.managedObjectClassName 
             entity.properties = entityDescription.attributes.map { $0.makeAttribute() } + entityDescription.fetchedProperties.map { $0.makeFetchedProperty() }
-            
+            entity.uniquenessConstraints = entityDescription.uniqueConstraints
             
             return (entityDescription.name, entity)
         })

@@ -12,8 +12,8 @@ import CoreData
 /// Describes and creates`NSAttributeDescription`
 public struct CoreDataAttributeDescription {
 
-    public static func attribute(name: String, type: NSAttributeType, isOptional: Bool = false, isIndexed: Bool = false, isIndexedBySpotlight: Bool = false) -> CoreDataAttributeDescription {
-        return CoreDataAttributeDescription(name: name, attributeType: type, isOptional: isOptional, isIndexed: isIndexed, isIndexedBySpotlight: isIndexedBySpotlight)
+    public static func attribute(name: String, type: NSAttributeType, isOptional: Bool = false, defaultValue: String? = nil, className: String? = nil, isIndexedBySpotlight: Bool = false) -> CoreDataAttributeDescription {
+        return CoreDataAttributeDescription(name: name, attributeType: type, isOptional: isOptional, defaultValue: defaultValue, className: className, isIndexedBySpotlight: isIndexedBySpotlight)
     }
 
     public var name: String
@@ -22,8 +22,10 @@ public struct CoreDataAttributeDescription {
 
     public var isOptional: Bool
     
-    public var isIndexed: Bool
+    public var defaultValue: String?
     
+    public var className: String?
+        
     public var isIndexedBySpotlight: Bool
 
     public func makeAttribute() -> NSAttributeDescription {
@@ -31,9 +33,10 @@ public struct CoreDataAttributeDescription {
         attribute.name = name
         attribute.attributeType = attributeType
         attribute.isOptional = isOptional
-        attribute.isIndexed = isIndexed
         attribute.isIndexedBySpotlight = isIndexedBySpotlight
-
+        attribute.defaultValue = defaultValue
+        attribute.attributeValueClassName = className
+        
         return attribute
     }
 }
