@@ -25,6 +25,8 @@ public struct CoreDataAttributeDescription {
     public var defaultValue: String?
     
     public var className: String?
+    
+    public var valueTransformerName: String?
         
     public var isIndexedBySpotlight: Bool
 
@@ -41,6 +43,7 @@ public struct CoreDataAttributeDescription {
         
         if let className = className {
             attribute.attributeValueClassName = className
+            attribute.valueTransformerName = valueTransformerName ?? "NSSecureUnarchiveFromData"
         }
         
         return attribute
