@@ -22,7 +22,7 @@ public struct CoreDataAttributeDescription {
 
     public var isOptional: Bool
     
-    public var defaultValue: String?
+    public var defaultValue: Any?
     
     public var className: String?
     
