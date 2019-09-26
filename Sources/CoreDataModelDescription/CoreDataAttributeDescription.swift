@@ -12,7 +12,7 @@ import CoreData
 /// Describes and creates`NSAttributeDescription`
 public struct CoreDataAttributeDescription {
 
-    public static func attribute(name: String, type: NSAttributeType, isOptional: Bool = false, defaultValue: String? = nil, className: String? = nil, isIndexedBySpotlight: Bool = false) -> CoreDataAttributeDescription {
+    public static func attribute(name: String, type: NSAttributeType, isOptional: Bool = false, defaultValue: Any? = nil, className: String? = nil, isIndexedBySpotlight: Bool = false) -> CoreDataAttributeDescription {
         return CoreDataAttributeDescription(name: name, attributeType: type, isOptional: isOptional, defaultValue: defaultValue, className: className, isIndexedBySpotlight: isIndexedBySpotlight)
     }
 
