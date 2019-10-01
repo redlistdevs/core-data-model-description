@@ -86,8 +86,6 @@ public struct CoreDataModelDescription {
             relationship.inverseRelationship = inverseRelationship
         }
         
-        model.entities = Array(entityNameToEntity.values)
-        
         // 3.5
         entities.forEach {
             let sourceEntity = entityNameToEntity[$0.name]
@@ -107,6 +105,8 @@ public struct CoreDataModelDescription {
                 $0.1.fetchRequest = fetchRequest
             }
         }
+        
+        model.entities = Array(entityNameToEntity.values)
         
         //Fourth step
         entities.map { entity -> (String, String) in
