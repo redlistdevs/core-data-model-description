@@ -8,6 +8,15 @@
 import CoreData
 
 
+public extension NSFetchRequest {
+    
+    @objc static func fetchRequest(entityName: String, predicate: NSPredicate) -> NSFetchRequest<NSFetchRequestResult> {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+        request.predicate = predicate
+        return request
+    }
+}
+
 /// Describes and creates`NSAttributeDescription`
 public struct CoreDataFetchedPropertyDescription {
 

@@ -30,18 +30,11 @@ public struct CoreDataModelDescription {
         // First step
         let entityNameToEntity: [String: NSEntityDescription] = .init(uniqueKeysWithValues: entities.map { entityDescription in
 
-            let fetchedProperties = entityDescription.fetchedProperties.map { ($0, $0.makeFetchedProperty()) }
-            
             let entity = NSEntityDescription()
             entity.name = entityDescription.name
             entity.managedObjectClassName = entityDescription.managedObjectClassName 
-            entity.properties = entityDescription.attributes.map { $0.makeAttribute() } + fetchedProperties.map { $0.1 }
+            entity.properties = entityDescription.attributes.map { $0.makeAttribute() }
             entity.uniquenessConstraints = entityDescription.uniqueConstraints
-            
-            // Setup fetchRequests on the FetchedProperties AFTER they are already properties of an NSEntityDescription.
-            fetchedProperties.forEach {
-                $0.1.fetchRequest = $0.0.fetchRequest
-            }
             
             return (entityDescription.name, entity)
         })
@@ -94,6 +87,26 @@ public struct CoreDataModelDescription {
         }
         
         model.entities = Array(entityNameToEntity.values)
+        
+        // 3.5
+        entities.forEach {
+            let sourceEntity = entityNameToEntity[$0.name]
+            
+            let fetchedPropertyDescriptions = $0.fetchedProperties.map { ($0, $0.makeFetchedProperty()) }
+            sourceEntity?.properties += fetchedPropertyDescriptions.map { $0.1 }
+            
+            // Setup fetchRequests on the FetchedProperties AFTER they are already properties of an NSEntityDescription.
+            fetchedPropertyDescriptions.forEach {
+                let fetchRequest = $0.0.fetchRequest
+                
+                guard let entityName = fetchRequest.entityName else {
+                    return
+                }
+                
+                fetchRequest.entity = entityNameToEntity[entityName]
+                $0.1.fetchRequest = fetchRequest
+            }
+        }
         
         //Fourth step
         entities.map { entity -> (String, String) in
