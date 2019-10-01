@@ -24,9 +24,11 @@ public struct CoreDataFetchedPropertyDescription {
     public func makeFetchedProperty() -> NSFetchedPropertyDescription {
         let fetchedProperty = NSFetchedPropertyDescription()
         fetchedProperty.name = name
-        fetchedProperty.fetchRequest = fetchRequest
         fetchedProperty.isOptional = isOptional
 
+        // Cannot set .fetchRequest here. This must be done after
+        // this fetched property is added as a property to an NSEntityDescription.
+        
         return fetchedProperty
     }
 }

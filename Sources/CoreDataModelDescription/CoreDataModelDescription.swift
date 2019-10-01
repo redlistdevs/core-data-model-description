@@ -30,11 +30,18 @@ public struct CoreDataModelDescription {
         // First step
         let entityNameToEntity: [String: NSEntityDescription] = .init(uniqueKeysWithValues: entities.map { entityDescription in
 
+            let fetchedProperties = entityDescription.fetchedProperties.map { ($0, $0.makeFetchedProperty()) }
+            
             let entity = NSEntityDescription()
             entity.name = entityDescription.name
             entity.managedObjectClassName = entityDescription.managedObjectClassName 
-            entity.properties = entityDescription.attributes.map { $0.makeAttribute() } + entityDescription.fetchedProperties.map { $0.makeFetchedProperty() }
+            entity.properties = entityDescription.attributes.map { $0.makeAttribute() } + fetchedProperties.map { $0.1 }
             entity.uniquenessConstraints = entityDescription.uniqueConstraints
+            
+            // Setup fetchRequests on the FetchedProperties AFTER they are already properties of an NSEntityDescription.
+            fetchedProperties.forEach {
+                $0.1.fetchRequest = $0.0.fetchRequest
+            }
             
             return (entityDescription.name, entity)
         })
