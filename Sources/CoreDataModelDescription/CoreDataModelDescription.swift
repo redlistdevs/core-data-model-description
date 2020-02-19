@@ -12,10 +12,10 @@ import CoreData
 /// Used to create `NSManagedObjectModel`
 public struct CoreDataModelDescription {
 
-    public var versionIdentifiers: Set<AnyHashable>
+    public var versionIdentifiers: Set<AnyHashable>?
     public var entities: [CoreDataEntityDescription]
     
-    public init(versionIdentifiers: Set<AnyHashable>, entities: [CoreDataEntityDescription]) {
+    public init(versionIdentifiers: Set<AnyHashable>? = nil, entities: [CoreDataEntityDescription]) {
         self.versionIdentifiers = versionIdentifiers
         self.entities = entities
     }
@@ -23,7 +23,9 @@ public struct CoreDataModelDescription {
     public func makeModel() -> NSManagedObjectModel {
         let model = NSManagedObjectModel()
         
-        model.versionIdentifiers = versionIdentifiers
+        if let versionIdentifiers = versionIdentifiers {
+            model.versionIdentifiers = versionIdentifiers
+        }
         
         // Model creation is split in four steps:
         // 1. First step creates all entities and their attributes. Entities are mapped to their names for faster lookup.
