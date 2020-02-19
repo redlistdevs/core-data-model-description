@@ -12,10 +12,11 @@ import CoreData
 /// Used to create `NSManagedObjectModel`
 public struct CoreDataModelDescription {
 
+    public var versionIdentifiers: Set<AnyHashable>
     public var entities: [CoreDataEntityDescription]
-    public var versionIdentifiers = Set<AnyHashable>()
     
-    public init(entities: [CoreDataEntityDescription]) {
+    public init(versionIdentifiers: Set<AnyHashable>, entities: [CoreDataEntityDescription]) {
+        self.versionIdentifiers = versionIdentifiers
         self.entities = entities
     }
     
