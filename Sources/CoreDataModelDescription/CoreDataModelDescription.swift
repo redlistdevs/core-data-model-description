@@ -13,14 +13,17 @@ import CoreData
 public struct CoreDataModelDescription {
 
     public var entities: [CoreDataEntityDescription]
-
+    public var versionIdentifiers = Set<AnyHashable>()
+    
     public init(entities: [CoreDataEntityDescription]) {
         self.entities = entities
     }
     
     public func makeModel() -> NSManagedObjectModel {
         let model = NSManagedObjectModel()
-                
+        
+        model.versionIdentifiers = versionIdentifiers
+        
         // Model creation is split in four steps:
         // 1. First step creates all entities and their attributes. Entities are mapped to their names for faster lookup.
         // 2. Second step creates relationships and establishes parent-child (sub-super entity) connections. This step produces a list of relationships with inverse (and their descriptions).
